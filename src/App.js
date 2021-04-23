@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -42,7 +44,7 @@ const App = () => {
       setPassword('')
     } catch (error) {
       console.log(error.message)
-      setErrorMessage('There is a error')
+      setErrorMessage('wrong username or password')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -68,38 +70,37 @@ const App = () => {
     }
   }
 
+  const handleBlogTitleChange = (event) => {
+    setNewBlog({...newBlog, title: event.target.value})
+  }
+
+  const handleBlogAuthorChange = (event) => {
+    setNewBlog({...newBlog, author: event.target.value})
+  }
+
+  const handleBlogUrlChange = (event) => {
+    setNewBlog({...newBlog, url: event.target.value})
+  }
+
+  const handleLoginUserNameChange = (event) => {
+    setUsername(event.target.value)
+  }
+
+  const handleLoginPasswordChange = (event) => {
+    setPassword(event.target.value)
+  }
+
   const loginForm = () => {
     if (user === null) {
       return (
-        <div>
-          <h2>log in to application</h2>
-          <div>{errorMessage}</div>
-          <form onSubmit={handleLogin}>
-            <div>
-              <label>
-                Username:
-                <input 
-                  type="text" 
-                  value={username}
-                  name="username"
-                  onChange={({target}) => { setUsername(target.value) }}
-                />  
-              </label>
-            </div>
-            <div>
-              <label>
-                Password:
-                <input 
-                  type="text" 
-                  value={password}
-                  name="password"
-                  onChange={({target}) => { setPassword(target.value) }}
-                />  
-              </label>      
-            </div>
-            <button type="submit">Login</button>
-          </form>
-        </div>
+        <LoginForm 
+          errorMessage={errorMessage}
+          handleLogin={handleLogin}
+          username={username}
+          password={password}
+          handleLoginUserNameChange={handleLoginUserNameChange}
+          handleLoginPasswordChange={handleLoginPasswordChange}
+        />
       )
     }
 
@@ -114,45 +115,14 @@ const App = () => {
           {`${loggedUserName} logged in`}
           <button onClick={handelLogout}>logout</button>
         </div>
-        <div>
-          <h2>create new</h2>
-          <form onSubmit={handleCreate}>
-            <div>
-              <label>
-                title:
-                <input 
-                  type="text" 
-                  value={newBlog.title}
-                  name="title"
-                  onChange={({target}) => { setNewBlog({...newBlog, title: target.value}) }}
-                />  
-              </label>    
-            </div>
-            <div>
-              <label>
-                author:
-                <input 
-                  type="text" 
-                  value={newBlog.author}
-                  name="author"
-                  onChange={({target}) => { setNewBlog({...newBlog, author: target.value}) }}
-                />  
-              </label>  
-            </div>
-            <div>
-              <label>
-                url:
-                <input 
-                  type="text" 
-                  value={newBlog.url}
-                  name="url"
-                  onChange={({target}) => { setNewBlog({...newBlog, url: target.value}) }}
-                />  
-              </label>  
-            </div>
-            <button type="submit">create</button>
-          </form>
-        </div>
+        
+        <BlogForm 
+          newBlog={newBlog}
+          handleCreate={handleCreate}
+          handleBlogTitleChange={handleBlogTitleChange}
+          handleBlogAuthorChange={handleBlogAuthorChange}
+          handleBlogUrlChange={handleBlogUrlChange}
+        />
 
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
@@ -169,8 +139,6 @@ const App = () => {
     setUser(null)
   }
 
-
-  
 
   return (
     <div>
