@@ -16,7 +16,7 @@ const App = () => {
 
 
   useEffect(() => {
-    async function getBlogs() {
+    const getBlogs = async () => {
       const blogs = await blogService.getAll()
       setBlogs(blogs)
     }
