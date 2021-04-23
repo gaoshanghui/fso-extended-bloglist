@@ -11,7 +11,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [newBlog, setNewBlog] = useState({title: '', author: '', url: ''})
   const [successfulMessage, setSuccessfulMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
@@ -54,35 +53,11 @@ const App = () => {
     }
   }
 
-  const handleCreate = async (event) => {
+  const handelLogout = (event) => {
     event.preventDefault()
 
-    try {
-      const response = await blogService.create(newBlog)
-
-      const updatedBlogs = blogs.concat(response)
-      setBlogs(updatedBlogs)
-      setNewBlog({title: '', author: '', url: ''})
-      setSuccessfulMessage(`A new blog ${response.title} by ${response.author} added`)
-      setTimeout(() => {
-        setSuccessfulMessage(null)
-      }, 5000)
-
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
-  const handleBlogTitleChange = (event) => {
-    setNewBlog({...newBlog, title: event.target.value})
-  }
-
-  const handleBlogAuthorChange = (event) => {
-    setNewBlog({...newBlog, author: event.target.value})
-  }
-
-  const handleBlogUrlChange = (event) => {
-    setNewBlog({...newBlog, url: event.target.value})
+    window.localStorage.clear()
+    setUser(null)
   }
 
   const handleLoginUserNameChange = (event) => {
@@ -92,6 +67,22 @@ const App = () => {
   const handleLoginPasswordChange = (event) => {
     setPassword(event.target.value)
   }
+
+  const handleCreateBlog = async (blogObject) => {
+    try {
+      const response = await blogService.create(blogObject)
+      const updatedBlogs = blogs.concat(response)
+      setBlogs(updatedBlogs)
+
+      setSuccessfulMessage(`A new blog ${response.title} by ${response.author} added`)
+      setTimeout(() => {
+        setSuccessfulMessage(null)
+      }, 5000)
+
+    } catch (error) {
+      console.log(error.message)
+    }
+  }  
 
   const loginForm = () => {
     if (user === null) {
@@ -120,13 +111,7 @@ const App = () => {
         </div>
 
         <Togglable buttonLabel="new blog">
-            <BlogForm 
-              newBlog={newBlog}
-              handleCreate={handleCreate}
-              handleBlogTitleChange={handleBlogTitleChange}
-              handleBlogAuthorChange={handleBlogAuthorChange}
-              handleBlogUrlChange={handleBlogUrlChange}
-            />
+          <BlogForm createBlog={handleCreateBlog} />
         </Togglable>
 
         {blogs.map(blog =>
@@ -134,14 +119,6 @@ const App = () => {
         )}
       </div>
     )
-  }
-
-
-  const handelLogout = (event) => {
-    event.preventDefault()
-
-    window.localStorage.clear()
-    setUser(null)
   }
 
 
