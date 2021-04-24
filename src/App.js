@@ -78,11 +78,23 @@ const App = () => {
       setTimeout(() => {
         setSuccessfulMessage(null)
       }, 5000)
-
     } catch (error) {
       console.log(error.message)
     }
-  }  
+  }
+
+  const handleUpdateBlogLikes = async (blogObject) => {
+    try {
+      const response = await blogService.update(blogObject)
+      const newBlogs = blogs.map((blog) => {
+        if (blog.id === blogObject.id) return blogObject
+        return blog
+      })
+      setBlogs(newBlogs)
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   const loginForm = () => {
     if (user === null) {
@@ -115,7 +127,7 @@ const App = () => {
         </Togglable>
 
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
+          <Blog key={blog.id} blog={blog} updateLikes={handleUpdateBlogLikes}/>
         )}
       </div>
     )
