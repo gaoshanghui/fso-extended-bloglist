@@ -85,7 +85,7 @@ const App = () => {
 
   const handleUpdateBlogLikes = async (blogObject) => {
     try {
-      const response = await blogService.update(blogObject)
+      await blogService.update(blogObject)
       const newBlogs = blogs.map((blog) => {
         if (blog.id === blogObject.id) return blogObject
         return blog
@@ -94,6 +94,22 @@ const App = () => {
     } catch (error) {
       console.log(error.message)
     }
+  }
+
+  const handleRemoveBlog = async (blogObject) => {
+    const windowConfirmMessage = `Remove blog ${blogObject.title} by ${blogObject.author}`
+    if (window.confirm(windowConfirmMessage)) {
+      try {
+        await blogService.remove(blogObject.id)
+        const newBlogs = blogs.filter((blog) => {
+          return blog.id !== blogObject.id
+        })
+        setBlogs(newBlogs)
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+    return null
   }
 
   const loginForm = () => {
@@ -126,9 +142,14 @@ const App = () => {
           <BlogForm createBlog={handleCreateBlog} />
         </Togglable>
 
-        {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} updateLikes={handleUpdateBlogLikes}/>
-        )}
+        {
+          blogs.sort((a, b) => {
+            // larger likes comes to the first(Sort the array in descending order)
+            return b.likes - a.likes 
+          }).map(blog =>
+            <Blog key={blog.id} blog={blog} updateLikes={handleUpdateBlogLikes} removeBlog={handleRemoveBlog}/>
+          )
+        }
       </div>
     )
   }

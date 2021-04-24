@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import './Blog.css'
 
-const Blog = ({blog, updateLikes}) => {
+const Blog = ({blog, updateLikes, removeBlog}) => {
   const [view, setView] = useState(false)
 
-  const showWhenVisible = { display: view ? '' : 'none' }
+  const loginUserJSON = window.localStorage.getItem('loggedBloglistappUser')
+  const loginUser = JSON.parse(loginUserJSON)
+  const loginUsername = loginUser.username
+  const blogOwner = blog.user.username
 
+  const showWhenVisible = { display: view ? '' : 'none' }
   const handleView = () => {
     setView(!view)
   }
@@ -13,6 +17,10 @@ const Blog = ({blog, updateLikes}) => {
   const handleLike = () => {
     const newBlogInfo = {...blog, likes: blog.likes + 1}
     updateLikes(newBlogInfo)
+  }
+
+  const handleRemove = () => {
+    removeBlog(blog)
   }
 
   return (
@@ -25,6 +33,9 @@ const Blog = ({blog, updateLikes}) => {
         <div>URL: {blog.url}</div>
         <div>likes: {blog.likes} <button onClick={handleLike}>like</button></div>
         <div>Author: {blog.author}</div>
+        <div>
+          { loginUsername === blogOwner && <button onClick={handleRemove}>remove</button> }
+        </div>
       </div>
     </div>    
   )
