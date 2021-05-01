@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Blog.css'
 
-const Blog = ({blog, updateLikes, removeBlog}) => {
+const Blog = ({ blog, updateLikes, removeBlog }) => {
   const [view, setView] = useState(false)
 
   const loginUserJSON = window.localStorage.getItem('loggedBloglistappUser')
@@ -15,7 +15,7 @@ const Blog = ({blog, updateLikes, removeBlog}) => {
   }
 
   const handleLike = () => {
-    const newBlogInfo = {...blog, likes: blog.likes + 1}
+    const newBlogInfo = { ...blog, likes: blog.likes + 1 }
     updateLikes(newBlogInfo)
   }
 
@@ -27,7 +27,7 @@ const Blog = ({blog, updateLikes, removeBlog}) => {
     <div className="blog">
       <div className="blog__title">
         {blog.title}
-        <button onClick={handleView}>{view ? "hide" : "view"}</button>
+        <button onClick={handleView}>{view ? 'hide' : 'view'}</button>
       </div>
       <div className="blog__body" style={showWhenVisible}>
         <div>URL: {blog.url}</div>
@@ -37,7 +37,7 @@ const Blog = ({blog, updateLikes, removeBlog}) => {
           { loginUsername === blogOwner && <button onClick={handleRemove}>remove</button> }
         </div>
       </div>
-    </div>    
+    </div>
   )
 }
 

@@ -1,26 +1,26 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
-const BlogForm = ({createBlog}) => {
-  const [newBlog, setNewBlog] = useState({title: '', author: '', url: ''})
+const BlogForm = ({ createBlog }) => {
+  const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
 
 
   const handleBlogTitleChange = (event) => {
-    setNewBlog({...newBlog, title: event.target.value})
+    setNewBlog({ ...newBlog, title: event.target.value })
   }
 
   const handleBlogAuthorChange = (event) => {
-    setNewBlog({...newBlog, author: event.target.value})
+    setNewBlog({ ...newBlog, author: event.target.value })
   }
 
   const handleBlogUrlChange = (event) => {
-    setNewBlog({...newBlog, url: event.target.value})
+    setNewBlog({ ...newBlog, url: event.target.value })
   }
-  
+
   const handleCreate = (event) => {
     event.preventDefault()
-    
+
     createBlog(newBlog)
-    setNewBlog({title: '', author: '', url: ''})
+    setNewBlog({ title: '', author: '', url: '' })
   }
 
 
@@ -31,35 +31,35 @@ const BlogForm = ({createBlog}) => {
         <div>
           <label>
             title:
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={newBlog.title}
               name="title"
               onChange={handleBlogTitleChange}
-            />  
-          </label>    
+            />
+          </label>
         </div>
         <div>
           <label>
             author:
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={newBlog.author}
               name="author"
               onChange={handleBlogAuthorChange}
-            />  
-          </label>  
+            />
+          </label>
         </div>
         <div>
           <label>
             url:
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={newBlog.url}
               name="url"
               onChange={handleBlogUrlChange}
-            />  
-          </label>  
+            />
+          </label>
         </div>
         <button type="submit">create</button>
       </form>

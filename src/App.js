@@ -36,11 +36,11 @@ const App = () => {
     event.preventDefault()
 
     try {
-      const user = await loginService.login({username, password})
+      const user = await loginService.login({ username, password })
 
       window.localStorage.setItem('loggedBloglistappUser', JSON.stringify(user))
       blogService.setToken(user.token)
-      
+
       setUser(user)
       setUsername('')
       setPassword('')
@@ -115,7 +115,7 @@ const App = () => {
   const loginForm = () => {
     if (user === null) {
       return (
-        <LoginForm 
+        <LoginForm
           errorMessage={errorMessage}
           handleLogin={handleLogin}
           username={username}
@@ -145,7 +145,7 @@ const App = () => {
         {
           blogs.sort((a, b) => {
             // larger likes comes to the first(Sort the array in descending order)
-            return b.likes - a.likes 
+            return b.likes - a.likes
           }).map(blog =>
             <Blog key={blog.id} blog={blog} updateLikes={handleUpdateBlogLikes} removeBlog={handleRemoveBlog}/>
           )
