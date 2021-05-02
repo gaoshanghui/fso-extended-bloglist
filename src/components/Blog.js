@@ -26,13 +26,13 @@ const Blog = ({ blog, updateLikes, removeBlog }) => {
   return (
     <div className="blog">
       <div className="blog__title">
-        {blog.title}
+        {blog.title} - {blog.author}
         <button onClick={handleView}>{view ? 'hide' : 'view'}</button>
       </div>
       <div className="blog__body" style={showWhenVisible}>
         <div>URL: {blog.url}</div>
-        <div>likes: {blog.likes} <button onClick={handleLike}>like</button></div>
-        <div>Author: {blog.author}</div>
+        <div>Likes: {blog.likes} <button onClick={handleLike}>like</button></div>
+        <div>Owner: {blog.user.username}</div>
         <div>
           { loginUsername === blogOwner && <button onClick={handleRemove}>remove</button> }
         </div>
