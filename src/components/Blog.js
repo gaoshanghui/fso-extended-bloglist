@@ -24,11 +24,11 @@ const Blog = ({ blog, updateLikes, removeBlog, loginUsername }) => {
     <div className="blog">
       <div className="blog__title">
         {blog.title} - {blog.author}
-        <button onClick={handleView}>{view ? 'hide' : 'view'}</button>
+        <button className="blog__view-controlling-button" onClick={handleView}>{view ? 'hide' : 'view'}</button>
       </div>
       <div className="blog__body" style={showWhenVisible}>
         <div>URL: {blog.url}</div>
-        <div>Likes: {blog.likes} <button onClick={handleLike}>like</button></div>
+        <div>Likes: {blog.likes} <button className="blog__like-button" onClick={handleLike}>like</button></div>
         <div>Owner: {blog.user.username}</div>
         <div>
           { loginUsername === blogOwner && <button onClick={handleRemove}>remove</button> }
