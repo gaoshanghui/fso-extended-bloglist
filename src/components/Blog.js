@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import './Blog.css'
 
-const Blog = ({ blog, updateLikes, removeBlog }) => {
+const Blog = ({ blog, updateLikes, removeBlog, loginUsername }) => {
   const [view, setView] = useState(false)
 
-  const loginUserJSON = window.localStorage.getItem('loggedBloglistappUser')
-  const loginUser = JSON.parse(loginUserJSON)
-  const loginUsername = loginUser.username
   const blogOwner = blog.user.username
 
   const showWhenVisible = { display: view ? '' : 'none' }

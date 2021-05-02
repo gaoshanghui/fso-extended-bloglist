@@ -128,6 +128,7 @@ const App = () => {
 
     const loggedUserInfo = JSON.parse(window.localStorage.getItem('loggedBloglistappUser'))
     const loggedUserName = loggedUserInfo.name
+    const loggedUserUsername = loggedUserInfo.username
 
     return (
       <div>
@@ -147,7 +148,13 @@ const App = () => {
             // larger likes comes to the first(Sort the array in descending order)
             return b.likes - a.likes
           }).map(blog =>
-            <Blog key={blog.id} blog={blog} updateLikes={handleUpdateBlogLikes} removeBlog={handleRemoveBlog}/>
+            <Blog
+              key={blog.id}
+              blog={blog}
+              updateLikes={handleUpdateBlogLikes}
+              removeBlog={handleRemoveBlog}
+              loginUsername={loggedUserUsername}
+            />
           )
         }
       </div>
