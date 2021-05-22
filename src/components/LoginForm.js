@@ -1,16 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import './LoginForm.css'
 
 const LoginForm = ({ errorMessage, handleLogin, username, password, handleLoginUserNameChange, handleLoginPasswordChange }) => {
   return (
     <div>
       <h2>log in to application</h2>
-      <div>{errorMessage}</div>
+      <div className="error-message">{errorMessage}</div>
       <form onSubmit={handleLogin}>
         <div>
           <label>
             Username:
             <input
+              className="form-input-username"
               type="text"
               value={username}
               name="username"
@@ -22,6 +24,7 @@ const LoginForm = ({ errorMessage, handleLogin, username, password, handleLoginU
           <label>
             Password:
             <input
+              className="form-input-password"
               type="password"
               value={password}
               name="password"
@@ -29,7 +32,7 @@ const LoginForm = ({ errorMessage, handleLogin, username, password, handleLoginU
             />
           </label>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" className="form-submit-button">Login</button>
       </form>
     </div>
   )

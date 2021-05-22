@@ -71,8 +71,9 @@ const App = () => {
   const handleCreateBlog = async (blogObject) => {
     try {
       const response = await blogService.create(blogObject)
-      const updatedBlogs = blogs.concat(response)
-      setBlogs(updatedBlogs)
+      // const updatedBlogs = blogs.concat(response)
+      const getNewBlogs = await blogService.getAll()
+      setBlogs(getNewBlogs)
 
       setSuccessfulMessage(`A new blog ${response.title} by ${response.author} added`)
       setTimeout(() => {

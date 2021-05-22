@@ -5,6 +5,8 @@ const Blog = ({ blog, updateLikes, removeBlog, loginUsername }) => {
   const [view, setView] = useState(false)
 
   const blogOwner = blog.user.username
+  // console.log('loginusername', loginUsername)
+  // console.log('blog data:' , blog)
 
   const showWhenVisible = { display: view ? '' : 'none' }
   const handleView = () => {
@@ -31,7 +33,7 @@ const Blog = ({ blog, updateLikes, removeBlog, loginUsername }) => {
         <div>Likes: {blog.likes} <button className="blog__like-button" onClick={handleLike}>like</button></div>
         <div>Owner: {blog.user.username}</div>
         <div>
-          { loginUsername === blogOwner && <button onClick={handleRemove}>remove</button> }
+          { loginUsername === blogOwner && <button className="blog__remove-button" onClick={handleRemove}>remove</button> }
         </div>
       </div>
     </div>
