@@ -5,9 +5,6 @@ const Blog = ({ blog, updateLikes, removeBlog, loginUsername }) => {
   const [view, setView] = useState(false)
 
   const blogOwner = blog.user.username
-  // console.log('loginusername', loginUsername)
-  // console.log('blog data:' , blog)
-
   const showWhenVisible = { display: view ? '' : 'none' }
   const handleView = () => {
     setView(!view)
