@@ -1,18 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
-import blogService from './services/blogs'
-import loginService from './services/login'
-import Togglable from './components/Togglable'
-import LoginForm from './components/LoginForm'
-import BlogForm from './components/BlogForm'
+import React, { useState, useEffect } from 'react';
+import Blog from './components/Blog';
+import blogService from './services/blogs';
+import loginService from './services/login';
+import Togglable from './components/Togglable';
+import LoginForm from './components/LoginForm';
+import BlogForm from './components/BlogForm';
+import Notification from './components/Notification';
+
+import { setNotification, clearNotification } from './reducers/notificationReducer';
+import { useSelector, useDispatch } from 'react-redux';
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [successfulMessage, setSuccessfulMessage] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
+  // const [successfulMessage, setSuccessfulMessage] = useState(null)
+
+  const dispatch = useDispatch();
+  const notificationMessage = useSelector(state => state);
 
 
   useEffect(() => {
@@ -21,7 +27,7 @@ const App = () => {
       setBlogs(blogs)
     }
     getBlogs()
-  }, [])
+  }, []);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistappUser')
@@ -30,7 +36,7 @@ const App = () => {
       setUser(user)
       blogService.setToken(user.token)
     }
-  }, [])
+  }, []);
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -46,43 +52,42 @@ const App = () => {
       setPassword('')
     } catch (error) {
       console.log(error.message)
-      setErrorMessage('wrong username or password')
+      dispatch(setNotification('wrong username or password', false))
       setTimeout(() => {
-        setErrorMessage(null)
+        dispatch(clearNotification())
       }, 5000)
     }
-  }
+  };
 
   const handelLogout = (event) => {
     event.preventDefault()
 
     window.localStorage.clear()
     setUser(null)
-  }
+  };
 
   const handleLoginUserNameChange = (event) => {
     setUsername(event.target.value)
-  }
+  };
 
   const handleLoginPasswordChange = (event) => {
     setPassword(event.target.value)
-  }
+  };
 
   const handleCreateBlog = async (blogObject) => {
     try {
       const response = await blogService.create(blogObject)
-      // const updatedBlogs = blogs.concat(response)
       const getNewBlogs = await blogService.getAll()
       setBlogs(getNewBlogs)
 
-      setSuccessfulMessage(`A new blog ${response.title} by ${response.author} added`)
+      dispatch(setNotification(`A new blog ${response.title} by ${response.author} added`, true))
       setTimeout(() => {
-        setSuccessfulMessage(null)
+        dispatch(clearNotification());
       }, 5000)
     } catch (error) {
       console.log(error.message)
     }
-  }
+  };
 
   const handleUpdateBlogLikes = async (blogObject) => {
     try {
@@ -117,7 +122,7 @@ const App = () => {
     if (user === null) {
       return (
         <LoginForm
-          errorMessage={errorMessage}
+          errorMessage={notificationMessage}
           handleLogin={handleLogin}
           username={username}
           password={password}
@@ -134,7 +139,8 @@ const App = () => {
     return (
       <div>
         <h2>blogs</h2>
-        <div>{successfulMessage}</div>
+        {/* <div>{successfulMessage}</div> */}
+        {notificationMessage && <Notification notificationMessage={notificationMessage}/>}
         <div>
           {`${loggedUserName} logged in`}
           <button onClick={handelLogout}>logout</button>

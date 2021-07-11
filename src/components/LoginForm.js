@@ -1,12 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Notification from './Notification';
 import './LoginForm.css'
 
 const LoginForm = ({ errorMessage, handleLogin, username, password, handleLoginUserNameChange, handleLoginPasswordChange }) => {
   return (
     <div>
       <h2>log in to application</h2>
-      <div className="error-message">{errorMessage}</div>
+      {/* {errorMessage && <div className="error-message">{errorMessage.content}</div>} */}
+      {errorMessage && <Notification notificationMessage={errorMessage} />}
       <form onSubmit={handleLogin}>
         <div>
           <label>
