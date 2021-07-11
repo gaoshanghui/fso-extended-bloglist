@@ -9,18 +9,20 @@ import Notification from './components/Notification';
 
 import { setNotification, clearNotification } from './reducers/notificationReducer';
 import { initialBlogs, createBlog, likedBlog, removeBlog } from './reducers/blogReducer';
+import { userLogin, userLogout } from './reducers/userReducer';
 import { useSelector, useDispatch } from 'react-redux';
 
 const App = () => {
   // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  // const [user, setUser] = useState(null)
 
   const dispatch = useDispatch();
 
   const notificationMessage = useSelector(state => state.notification);
   const defaultBlogs = useSelector(state => state.blogs);
+  const loggedInUser = useSelector(state => state.user);
 
   useEffect(() => {
     const getBlogs = async () => {
@@ -33,12 +35,16 @@ const App = () => {
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistappUser')
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      const user = JSON.parse(loggedUserJSON);
+
+      dispatch(userLogin(user));
+
+      // setUser(user)
       blogService.setToken(user.token)
     }
-  }, []);
+  }, [dispatch]);
 
+  // Handlers that relative to the login feature.
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -48,7 +54,9 @@ const App = () => {
       window.localStorage.setItem('loggedBloglistappUser', JSON.stringify(user))
       blogService.setToken(user.token)
 
-      setUser(user)
+      // setUser(user)
+      dispatch(userLogin(user));
+
       setUsername('')
       setPassword('')
     } catch (error) {
@@ -64,7 +72,8 @@ const App = () => {
     event.preventDefault()
 
     window.localStorage.clear()
-    setUser(null)
+    // setUser(null)
+    dispatch(userLogout());
   };
 
   const handleLoginUserNameChange = (event) => {
@@ -122,7 +131,7 @@ const App = () => {
   }
 
   const loginForm = () => {
-    if (user === null) {
+    if (loggedInUser === null) {
       return (
         <LoginForm
           errorMessage={notificationMessage}
@@ -135,7 +144,11 @@ const App = () => {
       )
     }
 
-    const loggedUserInfo = JSON.parse(window.localStorage.getItem('loggedBloglistappUser'))
+    // const loggedUserInfo = JSON.parse(window.localStorage.getItem('loggedBloglistappUser'))
+    // const loggedUserName = loggedUserInfo.name
+    // const loggedUserUsername = loggedUserInfo.username
+
+    const loggedUserInfo = loggedInUser;
     const loggedUserName = loggedUserInfo.name
     const loggedUserUsername = loggedUserInfo.username
 
