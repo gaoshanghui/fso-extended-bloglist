@@ -8,11 +8,11 @@ import BlogForm from './components/BlogForm';
 import Notification from './components/Notification';
 
 import { setNotification, clearNotification } from './reducers/notificationReducer';
-import { initialBlogs, createBlog, likedBlog } from './reducers/blogReducer';
+import { initialBlogs, createBlog, likedBlog, removeBlog } from './reducers/blogReducer';
 import { useSelector, useDispatch } from 'react-redux';
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -113,10 +113,7 @@ const App = () => {
     if (window.confirm(windowConfirmMessage)) {
       try {
         await blogService.remove(blogObject.id)
-        const newBlogs = blogs.filter((blog) => {
-          return blog.id !== blogObject.id
-        })
-        setBlogs(newBlogs)
+        dispatch(removeBlog(blogObject));
       } catch (error) {
         console.log(error.message)
       }
