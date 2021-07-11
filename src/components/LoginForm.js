@@ -7,7 +7,6 @@ const LoginForm = ({ errorMessage, handleLogin, username, password, handleLoginU
   return (
     <div>
       <h2>log in to application</h2>
-      {/* {errorMessage && <div className="error-message">{errorMessage.content}</div>} */}
       {errorMessage && <Notification notificationMessage={errorMessage} />}
       <form onSubmit={handleLogin}>
         <div>

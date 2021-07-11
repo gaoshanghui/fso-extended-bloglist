@@ -22,6 +22,7 @@ const create = async (newObject) => {
 
 const update = async (newObject) => {
   const response = await axios.put(`${baseUrl}/${newObject.id}`, newObject)
+  console.log('axios put response: ', response);
   return response.data
 }
 
@@ -34,4 +35,6 @@ const remove = async (objectId) => {
   return response
 }
 
-export default { setToken, getAll, create, update, remove }
+const exportedObject = { setToken, getAll, create, update, remove }
+
+export default exportedObject;

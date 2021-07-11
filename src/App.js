@@ -8,6 +8,7 @@ import BlogForm from './components/BlogForm';
 import Notification from './components/Notification';
 
 import { setNotification, clearNotification } from './reducers/notificationReducer';
+import { initialBlogs, createBlog, likedBlog } from './reducers/blogReducer';
 import { useSelector, useDispatch } from 'react-redux';
 
 const App = () => {
@@ -15,19 +16,19 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  // const [successfulMessage, setSuccessfulMessage] = useState(null)
 
   const dispatch = useDispatch();
-  const notificationMessage = useSelector(state => state);
 
+  const notificationMessage = useSelector(state => state.notification);
+  const defaultBlogs = useSelector(state => state.blogs);
 
   useEffect(() => {
     const getBlogs = async () => {
       const blogs = await blogService.getAll()
-      setBlogs(blogs)
+      dispatch(initialBlogs(blogs));
     }
     getBlogs()
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistappUser')
@@ -74,13 +75,20 @@ const App = () => {
     setPassword(event.target.value)
   };
 
+  // Handlers that relative to the blog
+  // Handle create a new blog
   const handleCreateBlog = async (blogObject) => {
     try {
-      const response = await blogService.create(blogObject)
-      const getNewBlogs = await blogService.getAll()
-      setBlogs(getNewBlogs)
+      const response = await blogService.create(blogObject);
+      dispatch(createBlog(response)); 
 
+      // Rerender blog lists after a new item added.
+      const newBlogs = await blogService.getAll();
+      dispatch(initialBlogs(newBlogs));
+
+      // show successful notification
       dispatch(setNotification(`A new blog ${response.title} by ${response.author} added`, true))
+      // clear notification after 5 seconds
       setTimeout(() => {
         dispatch(clearNotification());
       }, 5000)
@@ -89,19 +97,17 @@ const App = () => {
     }
   };
 
+  // Handle blog is liked
   const handleUpdateBlogLikes = async (blogObject) => {
     try {
-      await blogService.update(blogObject)
-      const newBlogs = blogs.map((blog) => {
-        if (blog.id === blogObject.id) return blogObject
-        return blog
-      })
-      setBlogs(newBlogs)
+      const updatedBlog = await blogService.update(blogObject)
+      dispatch(likedBlog(updatedBlog));
     } catch (error) {
       console.log(error.message)
     }
   }
 
+  // Handle blog is removed
   const handleRemoveBlog = async (blogObject) => {
     const windowConfirmMessage = `Remove blog ${blogObject.title} by ${blogObject.author}`
     if (window.confirm(windowConfirmMessage)) {
@@ -139,7 +145,6 @@ const App = () => {
     return (
       <div>
         <h2>blogs</h2>
-        {/* <div>{successfulMessage}</div> */}
         {notificationMessage && <Notification notificationMessage={notificationMessage}/>}
         <div>
           {`${loggedUserName} logged in`}
@@ -151,10 +156,12 @@ const App = () => {
         </Togglable>
 
         {
-          blogs.sort((a, b) => {
-            // larger likes comes to the first(Sort the array in descending order)
+          defaultBlogs && defaultBlogs.sort((a, b) => {
+            // larger likes comes to the first
+            // (Sort the array in descending order)
             return b.likes - a.likes
-          }).map(blog =>
+          })
+          .map(blog =>
             <Blog
               key={blog.id}
               blog={blog}
@@ -167,7 +174,6 @@ const App = () => {
       </div>
     )
   }
-
 
   return (
     <div>
