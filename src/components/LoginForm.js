@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Notification from './Notification';
 import './LoginForm.css'
 
-const LoginForm = ({ errorMessage, handleLogin, username, password, handleLoginUserNameChange, handleLoginPasswordChange }) => {
+const LoginForm = ({ handleLogin, username, password, handleLoginUserNameChange, handleLoginPasswordChange }) => {
   return (
     <div>
       <h2>log in to application</h2>
-      {errorMessage && <Notification notificationMessage={errorMessage} />}
       <form onSubmit={handleLogin}>
         <div>
           <label>

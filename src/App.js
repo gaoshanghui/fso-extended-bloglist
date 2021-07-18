@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Blog from './components/Blog';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import BlogList from './components/BlogList';
+import LoginStatusBar from './components/LoginStatusBar';
+
 import blogService from './services/blogs';
 import loginService from './services/login';
 import Togglable from './components/Togglable';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
 import Notification from './components/Notification';
+
+import UsersView from './components/UsersView';
 
 import { setNotification, clearNotification } from './reducers/notificationReducer';
 import { initialBlogs, createBlog, likedBlog, removeBlog } from './reducers/blogReducer';
@@ -89,7 +94,7 @@ const App = () => {
   const handleCreateBlog = async (blogObject) => {
     try {
       const response = await blogService.create(blogObject);
-      dispatch(createBlog(response)); 
+      dispatch(createBlog(response));
 
       // Rerender blog lists after a new item added.
       const newBlogs = await blogService.getAll();
@@ -144,51 +149,56 @@ const App = () => {
       )
     }
 
-    // const loggedUserInfo = JSON.parse(window.localStorage.getItem('loggedBloglistappUser'))
-    // const loggedUserName = loggedUserInfo.name
-    // const loggedUserUsername = loggedUserInfo.username
-
     const loggedUserInfo = loggedInUser;
-    const loggedUserName = loggedUserInfo.name
     const loggedUserUsername = loggedUserInfo.username
 
     return (
       <div>
-        <h2>blogs</h2>
-        {notificationMessage && <Notification notificationMessage={notificationMessage}/>}
-        <div>
-          {`${loggedUserName} logged in`}
-          <button onClick={handelLogout}>logout</button>
-        </div>
-
         <Togglable buttonLabel="new blog">
           <BlogForm createBlog={handleCreateBlog} />
         </Togglable>
 
-        {
-          defaultBlogs && defaultBlogs.sort((a, b) => {
-            // larger likes comes to the first
-            // (Sort the array in descending order)
-            return b.likes - a.likes
-          })
-          .map(blog =>
-            <Blog
-              key={blog.id}
-              blog={blog}
-              updateLikes={handleUpdateBlogLikes}
-              removeBlog={handleRemoveBlog}
-              loginUsername={loggedUserUsername}
-            />
-          )
-        }
+        <BlogList
+          blogs={defaultBlogs}
+          handleUpdateBlogLikes={handleUpdateBlogLikes}
+          handleRemoveBlog={handleRemoveBlog}
+          loggedUserUsername={loggedUserUsername}
+        />
       </div>
     )
   }
 
   return (
+    // React Router
     <div>
-      { loginForm() }
+      <h1>Extended Blog List App</h1>
+      {notificationMessage && <Notification notificationMessage={notificationMessage} />}
+      {loggedInUser && <LoginStatusBar loggedInUser={loggedInUser} handelLogout={handelLogout} />}
+
+      <Router>
+        <Switch>
+          <Route path="/users">
+            {/* If user is not logged in, ask for login first. */}
+            {loggedInUser === null ?
+              <LoginForm
+                handleLogin={handleLogin}
+                username={username}
+                password={password}
+                handleLoginUserNameChange={handleLoginUserNameChange}
+                handleLoginPasswordChange={handleLoginPasswordChange}
+              />
+              :
+              // Users component
+              <UsersView blogs={defaultBlogs} />
+            }
+          </Route>
+          <Router path="/">
+            <div>{loginForm()}</div>
+          </Router>
+        </Switch>
+      </Router>
     </div>
+
   )
 }
 
