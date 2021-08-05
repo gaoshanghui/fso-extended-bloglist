@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import BlogList from './components/BlogList';
+import Blog from './components/Blog';
 import LoginStatusBar from './components/LoginStatusBar';
 
 import blogService from './services/blogs';
@@ -11,6 +12,7 @@ import BlogForm from './components/BlogForm';
 import Notification from './components/Notification';
 
 import UsersView from './components/UsersView';
+import User from './components/User';
 
 import { setNotification, clearNotification } from './reducers/notificationReducer';
 import { initialBlogs, createBlog, likedBlog, removeBlog } from './reducers/blogReducer';
@@ -18,10 +20,8 @@ import { userLogin, userLogout } from './reducers/userReducer';
 import { useSelector, useDispatch } from 'react-redux';
 
 const App = () => {
-  // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  // const [user, setUser] = useState(null)
 
   const dispatch = useDispatch();
 
@@ -168,6 +168,12 @@ const App = () => {
     )
   }
 
+
+  const match = useRouteMatch('/blogs/:id');
+  const matchedBlog = match ? defaultBlogs.find(blog => blog.id === match.params.id) : null
+  console.log('Default blogs are: ', defaultBlogs);
+  console.log('Matched blog is: ', matchedBlog);
+
   return (
     // React Router
     <div>
@@ -175,8 +181,11 @@ const App = () => {
       {notificationMessage && <Notification notificationMessage={notificationMessage} />}
       {loggedInUser && <LoginStatusBar loggedInUser={loggedInUser} handelLogout={handelLogout} />}
 
-      <Router>
+      {/* <Router> */}
         <Switch>
+          <Route path="/users/:id">
+            <User blogs={defaultBlogs} />
+          </Route>
           <Route path="/users">
             {/* If user is not logged in, ask for login first. */}
             {loggedInUser === null ?
@@ -192,11 +201,22 @@ const App = () => {
               <UsersView blogs={defaultBlogs} />
             }
           </Route>
-          <Router path="/">
+          <Route path="/blogs/:id">
+            <Blog
+              blog={matchedBlog}
+              updateLikes={handleUpdateBlogLikes}
+              removeBlog={handleRemoveBlog}
+              loginUsername={loggedInUser}
+            />
+          </Route>
+          <Route path="/blogs">
+            {loginForm()}
+          </Route>
+          <Route path="/">
             <div>{loginForm()}</div>
-          </Router>
+          </Route>
         </Switch>
-      </Router>
+      {/* </Router> */}
     </div>
 
   )
