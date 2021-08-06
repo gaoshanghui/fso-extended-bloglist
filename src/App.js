@@ -33,8 +33,8 @@ const App = () => {
 
   useEffect(() => {
     const getBlogs = async () => {
-      const blogs = await blogService.getAll()
-      dispatch(initialBlogs(blogs));
+      const responsedBlogs = await blogService.getAll()
+      dispatch(initialBlogs(responsedBlogs));
     }
     getBlogs()
   }, [dispatch]);
@@ -43,10 +43,7 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-
       dispatch(userLogin(user));
-
-      // setUser(user)
       blogService.setToken(user.token)
     }
   }, [dispatch]);
@@ -79,7 +76,6 @@ const App = () => {
     event.preventDefault()
 
     window.localStorage.clear()
-    // setUser(null)
     dispatch(userLogout());
   };
 
@@ -173,8 +169,7 @@ const App = () => {
 
   const match = useRouteMatch('/blogs/:id');
   const matchedBlog = match ? defaultBlogs.find(blog => blog.id === match.params.id) : null
-  console.log('Default blogs are: ', defaultBlogs);
-  console.log('Matched blog is: ', matchedBlog);
+  // console.log('Default blogs are: ', defaultBlogs);
 
   return (
     // React Router
@@ -205,12 +200,16 @@ const App = () => {
             }
           </Route>
           <Route path="/blogs/:id">
-            <Blog
-              blog={matchedBlog}
-              updateLikes={handleUpdateBlogLikes}
-              removeBlog={handleRemoveBlog}
-              loginUsername={loggedInUser}
-            />
+            {
+              matchedBlog 
+              && 
+              <Blog
+                blog={matchedBlog}
+                updateLikes={handleUpdateBlogLikes}
+                removeBlog={handleRemoveBlog}
+                loginUsername={loggedInUser}
+              />
+            }
           </Route>
           <Route path="/blogs">
             {loginForm()}

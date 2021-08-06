@@ -1,7 +1,8 @@
 import React from 'react';
-import Blog from './Blog';
+// import Blog from './Blog';
+import { Link } from 'react-router-dom';
 
-const BlogList = ({ blogs, handleUpdateBlogLikes, handleRemoveBlog, loggedUserUsername }) => {
+const BlogList = ({ blogs }) => {
   return (
     <div>
       {
@@ -10,15 +11,11 @@ const BlogList = ({ blogs, handleUpdateBlogLikes, handleRemoveBlog, loggedUserUs
           // (Sort the array in descending order)
           return b.likes - a.likes
         })
-          .map(blog =>
-            <Blog
-              key={blog.id}
-              blog={blog}
-              updateLikes={handleUpdateBlogLikes}
-              removeBlog={handleRemoveBlog}
-              loginUsername={loggedUserUsername}
-            />
-          )
+          .map(blog => {
+            return (
+              <Link key={blog.id} to={`/blogs/${blog.id}`}><p>{blog.title} - {blog.author}</p></Link>
+            )
+          })
       }
     </div>
   )
