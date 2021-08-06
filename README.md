@@ -1,4 +1,4 @@
-# fso-extended-bloglist
+# fso-extended-bloglist-frontend
 It is an exercise of the [Full Stack open 2021](https://fullstackopen.com/en/) course.
 
 **The extended frontend part of the blog list application.**
