@@ -14,6 +14,8 @@ import Notification from './components/Notification';
 import UsersView from './components/UsersView';
 import User from './components/User';
 
+import Navigation from './components/Navigation';
+
 import { setNotification, clearNotification } from './reducers/notificationReducer';
 import { initialBlogs, createBlog, likedBlog, removeBlog } from './reducers/blogReducer';
 import { userLogin, userLogout } from './reducers/userReducer';
@@ -177,6 +179,7 @@ const App = () => {
   return (
     // React Router
     <div>
+      <Navigation />
       <h1>Extended Blog List App</h1>
       {notificationMessage && <Notification notificationMessage={notificationMessage} />}
       {loggedInUser && <LoginStatusBar loggedInUser={loggedInUser} handelLogout={handelLogout} />}

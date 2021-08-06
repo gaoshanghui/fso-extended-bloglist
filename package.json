@@ -1,5 +1,5 @@
 {
-  "name": "fso-extended-bloglist",
+  "name": "fso-extended-bloglist-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
