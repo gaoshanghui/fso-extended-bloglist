@@ -1,0 +1,18 @@
+.App {
+  &__headline {
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 82px;
+    color: #FFFFFF;
+    margin: 0;
+    text-align: center;
+    margin: 24px 0 32px;
+  }
+
+  &__menu {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

@@ -1,18 +1,24 @@
 .Notification {
+  max-width: 80%;
+  margin: 0 auto;
+
   &__message {
     font-size: 12px;
     font-weight: bold;
-    padding: 4px 8px;
+    padding: 8px 16px;
+    font-size: 16px;
 
     &--success {
-      color: #059669;
-      border: 1px solid #059669;
+      background: #059669;
+      color: #fff;
+      border: 1px solid #fff;
       border-radius: 4px;
     }
 
     &--error {
-      color: #DC2626;
-      border: 1px solid #DC2626;
+      background: #DC2626;
+      color: #fff;
+      border: 1px solid #fff;
       border-radius: 4px;
     }
   }

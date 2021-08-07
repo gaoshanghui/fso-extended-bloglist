@@ -1,0 +1,50 @@
+/* Colors: */
+$white: #FFFFFF;
+$black: #000000;
+
+/* Font/text values */
+$primary-font-family: 'Futura PT', sans-serif;
+
+
+@mixin headline-large {
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 72px;
+  margin: 24px 0;
+
+  @media (max-width: $bp-extra-small) {
+    font-size: 32px;
+    line-height: 48px;
+  }
+}
+
+@mixin headline-normal {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 48px;
+  margin: 16px 0;
+
+  @media (max-width: $bp-extra-small) {
+    font-size: 28px;
+    line-height: 42px;
+  }
+}
+
+@mixin body-normal {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  margin: 16px 0;
+}
+
+@mixin subtitle-normal {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+  margin: 16px 0;
+}
+
+/* Breakpoints */
+$bp-extra-small: 599px;
+$bp-small: 1239px;
+$bp-medium: 1439px;

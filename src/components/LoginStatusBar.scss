@@ -1,0 +1,22 @@
+.LoginStatusBar{
+  display: flex;
+  align-items: center;
+
+  &__user-infomation {
+    font-size: 16px;
+    color: #fff;
+    margin: 0 16px 0;
+  }
+
+  &__logout-button {
+    background: #4858D0;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.06);
+    padding: 8px 16px;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: Futura PT;
+    display: block;
+  }
+}

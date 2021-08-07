@@ -12,6 +12,8 @@ import notificationReducer from './reducers/notificationReducer';
 import blogReducer from './reducers/blogReducer';
 import userReducer from './reducers/userReducer';
 
+import './index.scss';
+
 const reducer = combineReducers({
   notification: notificationReducer,
   blogs: blogReducer,

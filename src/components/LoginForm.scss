@@ -1,0 +1,35 @@
+@import '../pattern';
+
+.LoginForm {
+  display: flex;
+  justify-content: center;
+
+  &__label {
+    display: block;
+    margin: 0 0 24px;
+  }
+
+  &__form-input {
+    display: block;
+    max-width: 380px;
+    padding: 16px 32px;
+    border-radius: 8px;
+    border: none;
+    font-size: 24px;
+    font-family: $primary-font-family;
+    font-weight: normal;
+  }
+
+  &__form-submit-button {
+    background: #4858D0;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.06);
+    padding: 16px 64px;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 24px;
+    font-family: Futura PT;
+    margin: 0 auto;
+    display: block;
+  }
+}

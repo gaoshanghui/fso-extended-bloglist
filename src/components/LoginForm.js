@@ -1,37 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './LoginForm.css'
+import './LoginForm.scss';
 
 const LoginForm = ({ handleLogin, username, password, handleLoginUserNameChange, handleLoginPasswordChange }) => {
   return (
-    <div>
-      <h2>log in to application</h2>
+    <div className="LoginForm">
       <form onSubmit={handleLogin}>
         <div>
-          <label>
-            Username:
-            <input
-              className="form-input-username"
+          <label className="LoginForm__label">
+            <input 
+              className="LoginForm__form-input"
               type="text"
               value={username}
               name="username"
               onChange={handleLoginUserNameChange}
+              placeholder="Username"
             />
           </label>
         </div>
         <div>
-          <label>
-            Password:
-            <input
-              className="form-input-password"
+          <label className="LoginForm__label">
+            <input 
+              className="LoginForm__form-input"
               type="password"
               value={password}
               name="password"
               onChange={handleLoginPasswordChange}
+              placeholder="Password"
             />
           </label>
         </div>
-        <button type="submit" className="form-submit-button">Login</button>
+        <button className="LoginForm__form-submit-button" type="submit">Login</button>
       </form>
     </div>
   )

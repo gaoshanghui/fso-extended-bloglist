@@ -1,10 +1,11 @@
 import React from 'react';
-// import Blog from './Blog';
 import { Link } from 'react-router-dom';
+
+import './BlogList.scss';
 
 const BlogList = ({ blogs }) => {
   return (
-    <div>
+    <div className="BlogList">
       {
         blogs && blogs.sort((a, b) => {
           // larger likes comes to the first
@@ -13,12 +14,14 @@ const BlogList = ({ blogs }) => {
         })
           .map(blog => {
             return (
-              <Link key={blog.id} to={`/blogs/${blog.id}`}><p>{blog.title} - {blog.author}</p></Link>
+              <div key={blog.id} className="BlogList__blog">
+                <Link to={`/blogs/${blog.id}`} className="BlogList__blog-link">{blog.title} - {blog.author}</Link>
+              </div>
             )
           })
       }
     </div>
-  )
+  );
 }
 
 export default BlogList;

@@ -21,6 +21,8 @@ import { initialBlogs, createBlog, likedBlog, removeBlog } from './reducers/blog
 import { userLogin, userLogout } from './reducers/userReducer';
 import { useSelector, useDispatch } from 'react-redux';
 
+import './App.scss';
+
 const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -173,11 +175,13 @@ const App = () => {
 
   return (
     // React Router
-    <div>
-      <Navigation />
-      <h1>Extended Blog List App</h1>
+    <div className="App">
+      <h1 className="App__headline">Bloglist</h1>
+      <div className="App__menu">
+        {loggedInUser && <Navigation />}
+        {loggedInUser && <LoginStatusBar loggedInUser={loggedInUser} handelLogout={handelLogout} />}
+      </div>
       {notificationMessage && <Notification notificationMessage={notificationMessage} />}
-      {loggedInUser && <LoginStatusBar loggedInUser={loggedInUser} handelLogout={handelLogout} />}
 
       {/* <Router> */}
         <Switch>
