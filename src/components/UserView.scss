@@ -1,0 +1,23 @@
+@import '../pattern';
+
+.UserView {
+  padding: 16px;
+
+  &__table {
+    width: 100%;
+  }
+
+  &__table-th {
+    text-align: center;
+    font-size: 20px;
+    padding: 8px;
+  }
+
+  &__table-username {
+    color: $white;
+  }
+
+  &__table-blog-number {
+    text-align: center;
+  }
+}

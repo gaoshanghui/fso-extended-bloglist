@@ -1,0 +1,30 @@
+@import "../pattern";
+
+.Togglable {
+  display: block;
+  padding: 0 0 24px;
+  width: 100%;
+
+  &__show-button-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__show-button {
+    border: none;
+    background: $green-500;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.06);
+    padding: 8px 32px;
+    border-radius: 4px;
+    color: $white;
+  }
+
+  &__hide-button {
+    border: none;
+    background: $white;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.06);
+    padding: 8px 32px;
+    border-radius: 4px;
+    color: $black;
+  }
+}

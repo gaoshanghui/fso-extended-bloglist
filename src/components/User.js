@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import './User.scss';
 
 const User = ({ blogs }) => {
   const id = useParams().id;
@@ -18,7 +19,7 @@ const User = ({ blogs }) => {
   }
 
   return (
-    <div>
+    <div className="User">
       <h2>{blogsOwnedByUser[0].user.name}</h2>
       <h3>added blogs</h3>
       <div>

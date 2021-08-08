@@ -1,38 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import "./BlogForm.scss";
 
 const BlogForm = ({ createBlog }) => {
-  const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
-
+  const [newBlog, setNewBlog] = useState({ title: "", author: "", url: "" });
 
   const handleBlogTitleChange = (event) => {
-    setNewBlog({ ...newBlog, title: event.target.value })
-  }
+    setNewBlog({ ...newBlog, title: event.target.value });
+  };
 
   const handleBlogAuthorChange = (event) => {
-    setNewBlog({ ...newBlog, author: event.target.value })
-  }
+    setNewBlog({ ...newBlog, author: event.target.value });
+  };
 
   const handleBlogUrlChange = (event) => {
-    setNewBlog({ ...newBlog, url: event.target.value })
-  }
+    setNewBlog({ ...newBlog, url: event.target.value });
+  };
 
   const handleCreate = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    createBlog(newBlog)
-    setNewBlog({ title: '', author: '', url: '' })
-  }
-
+    createBlog(newBlog);
+    setNewBlog({ title: "", author: "", url: "" });
+  };
 
   return (
-    <div className="new-blog-form">
-      <h2>create new</h2>
-      <form onSubmit={handleCreate}>
+    <div className="BlogForm">
+      <h2 className="BlogForm__headline">Create new</h2>
+      <form className="BlogForm__form" onSubmit={handleCreate}>
         <div>
-          <label>
-            title:
+          <label className="BlogForm__form-label">
+            <span>Title</span>
             <input
-              className="new-blog-form__title-input"
+              className="BlogForm__form-input"
               type="text"
               value={newBlog.title}
               name="title"
@@ -41,10 +40,10 @@ const BlogForm = ({ createBlog }) => {
           </label>
         </div>
         <div>
-          <label>
-            author:
+          <label className="BlogForm__form-label">
+            <span>Author</span>
             <input
-              className="new-blog-form__author-input"
+              className="BlogForm__form-input"
               type="text"
               value={newBlog.author}
               name="author"
@@ -53,10 +52,10 @@ const BlogForm = ({ createBlog }) => {
           </label>
         </div>
         <div>
-          <label>
-            url:
+          <label className="BlogForm__form-label">
+            <span>URL</span>
             <input
-              className="new-blog-form__url-input"
+              className="BlogForm__form-input"
               type="text"
               value={newBlog.url}
               name="url"
@@ -64,10 +63,10 @@ const BlogForm = ({ createBlog }) => {
             />
           </label>
         </div>
-        <button type="submit" className="new-blog-form__submit">create</button>
+        <button type="submit" className="BlogForm__submit">Create</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default BlogForm
+export default BlogForm;

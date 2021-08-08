@@ -1,0 +1,59 @@
+@import '../pattern';
+
+.Blog {
+  padding: 8px 16px;
+  margin: 0 0 4px 0;
+
+  &__title {
+    font-size: 24px;
+  }
+
+  &__like-button {
+    background: $green-500;
+    border: black;
+    border-radius: 4px;
+    padding: 4px 16px;
+    margin: 0 16px;
+    color: $white;
+  }
+
+  &__add-new-comment-form {
+    width: 100%;
+  }
+
+  &__add-new-comment-input {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    color: $black;
+
+    &:focus {
+      outline: 2px solid #4858D0;
+    }
+  }
+
+  &__add-new-comment-submit {
+    border: none;
+    border-radius: 4px;
+    padding: 16px 32px;
+    background: $green-500;
+    color: $white;
+    font-size: 16px;
+    display: block;
+    margin: 16px auto;
+  }
+
+  &__remove-blog-button {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 32px;
+    background: $black;
+    color: $white;
+    font-size: 14px;
+    display: block;
+    margin: 0 auto;
+  }
+}

@@ -1,10 +1,13 @@
-/* Colors: */
-$white: #FFFFFF;
+/* Colors:
+Colors are based on the tailwind css default color palette.
+https://tailwindcss.com/docs/customizing-colors
+*/
+$white: #ffffff;
 $black: #000000;
+$green-500: #10b981;
 
 /* Font/text values */
-$primary-font-family: 'Futura PT', sans-serif;
-
+$primary-font-family: "Roboto Condensed", sans-serif;
 
 @mixin headline-large {
   font-size: 48px;
